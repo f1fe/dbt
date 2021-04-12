@@ -127,10 +127,11 @@ class TestMacroNamespace:
         local_namespace = {}
         if depends_on_macros:
             for macro_unique_id in depends_on_macros:
-                macro = self.manifest.macros[macro_unique_id]
-                local_namespace[macro.name] = MacroGenerator(
-                    macro, self.ctx, self.node, self.thread_ctx,
-                )
+                if macro_unique_id in self.macro_resolver.macros:
+                    macro = self.macro_resolver.macros[macro_unique_id]
+                    local_namespace[macro.name] = MacroGenerator(
+                        macro, self.ctx, self.node, self.thread_ctx,
+                    )
         self.local_namespace = local_namespace
 
     def get_from_package(

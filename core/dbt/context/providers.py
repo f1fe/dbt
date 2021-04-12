@@ -1408,7 +1408,7 @@ class TestContext(ProviderContext):
         self.macro_resolver = macro_resolver
         self.thread_ctx = MacroStack()
         super().__init__(model, config, manifest, provider, context_config)
-        self._build_test_namespace
+        self._build_test_namespace()
 
     def _build_namespace(self):
         return {}
@@ -1422,7 +1422,7 @@ class TestContext(ProviderContext):
         if self.model.depends_on and self.model.depends_on.macros:
             depends_on_macros = self.model.depends_on.macros
         macro_namespace = TestMacroNamespace(
-            self.macro_resolver, self.ctx, self.node, self.thread_ctx,
+            self.macro_resolver, self._ctx, self.model, self.thread_ctx,
             depends_on_macros
         )
         self._namespace = macro_namespace
